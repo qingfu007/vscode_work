@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "*.tcc": "cpp",
+        "bitset": "cpp",
+        "chrono": "cpp",
+        "algorithm": "cpp",
+        "random": "cpp",
+        "istream": "cpp",
+        "limits": "cpp",
+        "valarray": "cpp",
+        "iostream": "cpp",
+        "ostream": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Enabled"
+}
