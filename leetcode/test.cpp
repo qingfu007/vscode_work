@@ -3,33 +3,41 @@
 #include <vector>
 #include<unordered_set>
 using namespace std;
+
+class HashPtr {
+public:
+    //  构造函数
+    HashPtr(const string &s=string()):
+        ps(new string(s)),i(0) { }
+    //拷贝构造函数
+    HashPtr(const HashPtr & p):
+        ps(new string(*p.ps)), i(p.i) { }
+    //拷贝赋值运算符的声明
+    HashPtr& operator=(const HashPtr &);
+    //析构函数
+    ~HashPtr() {delete ps; }
+
+private:
+    string *ps;
+    int i;
+    
+};
+
+HashPtr& HashPtr::operator=(const HashPtr &rhs)
+{
+    auto newp =new string(*rhs.ps);
+    delete ps;
+    ps=newp;
+    i=rhs.i;
+    return *this;
+}
+
+
 int main() {
-    vector<int> a(3,1);
-    a.reserve(4);
-    int i=a.size()-1;
-    auto j=a.size()-1;
-    // cout<<i<<endl;
-    // cout<<j<<endl;
-    unordered_set<int> nums;
-    cout<<"a:"<<a.capacity()<<endl;
-    int n=5;
-    while(n--)
-    {
-        a.push_back(20000);
-    }
+
+    string s=string();
     
 
-    cout<<"a:"<<a.capacity()<<endl;
-    a.reserve(9);
-    cout<<"a:"<<a.capacity()<<endl;
-    a.push_back(20000);
-    a.push_back(20000);
-    cout<<"a:"<<a.capacity()<<endl;
-    cout<<"a:"<<a.capacity()<<endl;
-    cout<<"a:"<<a.capacity()<<endl;
-
-
-    cout<<"nums:"<<nums.max_size()<<endl;
 
 
 

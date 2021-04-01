@@ -10,35 +10,66 @@ using namespace std;
 
 class Solution {
 public:
-
-    int islandPerimeter(vector<vector<int>>& grid) {
-        for(int i=0;i<grid.size();++i)
-            for(int j=0;j<grid[0].size();++j)
-            {
-                if(grid[i][j]==1) return dfs(grid,i,j);
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
+        if(K>=points.size()){
+            return points;
+        }else if(K<=0){
+            return {};
+        }else
+        {
+            int low=0,high=points.size()-1;
+            while(true){
+                int j =partition(points,low,high);
+                if(j==K) break;
+                else if(j>K) high=j-1;
+                else low=j+1;
             }
-        return 0;
+            return {points.begin(),points.begin()+K};
+        }
     }
-
-    int dfs(vector<vector<int>>& grid,int row,int col)
+    // int partition(vector<vector<int>>& nums,int low,int high)
+    // {
+    //     int i=low,j=high+1;
+    //     int v=nums[low][0]*nums[low][0]+nums[low][1]*nums[low][1];
+    //     while(i<j){
+    //         while((i++)<j&&nums[j][0]*nums[j][0]+nums[j][1]*nums[j][1]>=v); 
+    //         while(i<(j--)&&nums[i][0]*nums[i][0]+nums[i][1]*nums[i][1]<v);      
+    //         if(i<j) swap(nums[i],nums[j]);
+    //     }
+    //     swap(nums[low],nums[j]);
+    //     return j;
+    // }
+        int partition(vector<vector<int>>& nums,int low,int high)
     {
-        if(row<0||row>grid.size()-1||col<0||col>grid[0].size()-1||grid[row][col]==0) return 1;
-        if(grid[row][col]==2) return 0;
-        grid[row][col]=2;
-        int k= dfs(grid,row+1,col)
-               +dfs(grid,row-1,col)
-               +dfs(grid,row,col+1)
-               +dfs(grid,row,col-1);
-        grid[row][col]=1;
-        return k;
-        
+        int i=low+1,j=high;
+        int v=nums[low][0]*nums[low][0]+nums[low][1]*nums[low][1];
+        while(true){
+            while(i<=high&&(nums[i][0]*nums[i][0]+nums[i][1]*nums[i][1]<v)) i++;
+            while(j>=low&&(nums[j][0]*nums[j][0]+nums[j][1]*nums[j][1]>=v)) j--;       
+            if(i>j) break;
+             swap(nums[i],nums[j]);
+             i++;
+             j--;
+        }
+        swap(nums[low],nums[j]);
+        return j;
 
     }
-    
-    
-
-
 };
+
+int main(){
+    vector<vector<int>> points={{1,3},{-2,2}};
+    vector<vector<int>> res;
+    Solution solution;
+    res=solution.kClosest(points,1);
+
+    cout<<"end";
+
+    system("pause");
+    return 0;
+
+
+}
 
 /*
 Link: https://leetcode-cn.com/problems/single-number/
